@@ -82,7 +82,7 @@ public class AddressParse {
         Iterator<AreaTree> iterator = areas.iterator();
         while (iterator.hasNext()) {
             AreaTree next = iterator.next();
-            if (AreaEnum.CITY.getCode().equals(next.getLevel()) || AreaEnum.AREA.getCode().equals(next.getLevel())) {
+            if (AreaEnum.CITY.getCode().equals(next.getLevel()) || AreaEnum.COUNTRY.getCode().equals(next.getLevel())) {
                 if (StringUtils.length(next.getName()) <= 2) {
                     iterator.remove();
                 }
@@ -97,7 +97,7 @@ public class AddressParse {
 
         PROVINCE_LIST = areaMapping.get(AreaEnum.PROVINCE.getCode());
         CITY_LIST = areaMapping.get(AreaEnum.CITY.getCode());
-        AREA_LIST = areaMapping.get(AreaEnum.AREA.getCode());
+        AREA_LIST = areaMapping.get(AreaEnum.COUNTRY.getCode());
 
         log.info("地址解析器初始化耗时：{} ms", stopwatch.elapsed(TimeUnit.MILLISECONDS));
     }
@@ -198,7 +198,7 @@ public class AddressParse {
             result.setCity(area.getParent().getName());
             result.setArea(area.getName());
             result.setZipCode(area.getZipCode());
-            result.setType(AreaEnum.AREA);
+            result.setType(AreaEnum.COUNTRY);
 
             // 左侧排除省份城市名剩下的内容识别为姓名
             String leftAddress = StringUtils.left(address, match.getIndex());

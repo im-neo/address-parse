@@ -25,7 +25,7 @@ public interface BaseEnum {
 
     String CODE = "code";
 
-    String MESSAGE = "message";
+    String DESC = "desc";
 
     String ENUM_CLASS_TAIL = "Enum";
 
@@ -39,11 +39,11 @@ public interface BaseEnum {
     Integer getCode();
 
     /**
-     * 详情
+     * 描述
      *
      * @return
      */
-    String getMessage();
+    String getDesc();
 
     /**
      * 是否需要以字典的形式被加载，默认：false
@@ -141,7 +141,7 @@ public interface BaseEnum {
         if (null == e) {
             return null;
         }
-        return e.getMessage();
+        return e.getDesc();
     }
 
     /**
@@ -160,7 +160,7 @@ public interface BaseEnum {
         for (T e : enums) {
             map = new HashMap<>(2);
             map.put(CODE, String.valueOf(e.getCode()));
-            map.put(MESSAGE, e.getMessage());
+            map.put(DESC, e.getDesc());
             result.add(map);
         }
         return result;
@@ -180,7 +180,7 @@ public interface BaseEnum {
         }
         Map<Integer, String> result = new HashMap<>(enums.length);
         for (T e : enums) {
-            result.put(e.getCode(), e.getMessage());
+            result.put(e.getCode(), e.getDesc());
         }
         return result;
     }
@@ -235,7 +235,7 @@ public interface BaseEnum {
         EnumDictionary result = new EnumDictionary();
         result.setCode(e.getCode());
         result.setName(e.toString());
-        result.setMessage(e.getMessage());
+        result.setMessage(e.getDesc());
         return result;
     }
 
@@ -286,7 +286,7 @@ public interface BaseEnum {
      */
     static <T extends BaseEnum> String getMessageByCode(Map<Integer, T> map, Integer code) {
         T t = of(map, code);
-        return Objects.nonNull(t) ? t.getMessage() : StringUtils.EMPTY;
+        return Objects.nonNull(t) ? t.getDesc() : StringUtils.EMPTY;
     }
 
     /**
@@ -344,7 +344,7 @@ public interface BaseEnum {
         if (CollectionUtils.isEmpty(enums)) {
             return Collections.EMPTY_LIST;
         }
-        return enums.stream().map(BaseEnum::getMessage).collect(Collectors.toList());
+        return enums.stream().map(BaseEnum::getDesc).collect(Collectors.toList());
     }
 
     /**
