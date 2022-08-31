@@ -9,7 +9,7 @@ package com.neo.address.parse;
 public enum AreaEnum implements BaseEnum {
     PROVINCE(0, "省/直辖市"),
     CITY(1, "市/州"),
-    COUNTRY(2, "县/区 "),
+    DISTRICT(2, "县/区 "),
     TOWN(3, "乡/镇"),
     VILLAGE(4, "村/社区"),
     ;
