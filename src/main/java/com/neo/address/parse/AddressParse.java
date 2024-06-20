@@ -282,7 +282,8 @@ public class AddressParse {
                     result.setName(StringUtils.trim(leftAddress));
                 }
             }
-            address = StringUtils.substring(address, match.getIndex() + match.getMatchNameLength());
+            address = StringUtils.substring(address, match.getIndex() + (match.isShortMatch()?match.getMatchShortNameLength(): match.getMatchNameLength()));
+
             address = parseAreaByCity(city, result, address);
 
             result.setDetail(StringUtils.trim(address));
@@ -521,7 +522,10 @@ public class AddressParse {
             index = StringUtils.indexOf(address, area.getShortName());
             matchShort = index > -1;
         }
-        String matchName = index > -1 ? matchShort ? area.getShortName() : area.getName() : EMPTY;
+        String matchName = index > -1 ? area.getName() : EMPTY;
+        if (matchShort){
+            return new MatchResult(matchShort, matchName,area.getShortName(), index);
+        }
         return new MatchResult(matchShort, matchName, index);
     }
 
@@ -534,6 +538,7 @@ public class AddressParse {
         private boolean match;
         private boolean matchShort;
         private String matchName;
+        private String matchShortName;
         private int matchNameLength;
         private int index;
 
@@ -541,6 +546,19 @@ public class AddressParse {
             this.matchShort = matchShort;
             this.matchName = matchName;
             this.index = index;
+        }
+        public MatchResult(boolean matchShort, String matchName, String matchShortName, int index) {
+            this.matchShort = matchShort;
+            this.matchName = matchName;
+            this.matchShortName = matchShortName;
+            this.index = index;
+        }
+
+        public boolean isShortMatch() {
+            return this.matchShort;
+        }
+        public int getMatchShortNameLength() {
+            return StringUtils.length(this.matchShortName);
         }
 
 
